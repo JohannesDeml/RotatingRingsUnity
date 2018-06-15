@@ -10,29 +10,38 @@ public class ApplicationFramerate : MonoBehaviour {
     [SerializeField]
     private bool applyOnStart = true;
 
-    [SerializeField]
-    private bool applyOnApplicationFocus = true;
+	[SerializeField]
+	private bool applyOnUpdate = true;
 
+	[SerializeField]
+    private bool apply30OnApplicationFocus = true;
 
-	// Use this for initialization
 	void Start () 
     {
         if(applyOnStart) 
         {
-            ApplyTargetFramerate();
+            SetTargetFramerate(targetFramerate);
         }
 	}
 
     private void OnApplicationPause(bool pause)
     {
-        if(!pause && applyOnApplicationFocus)
+        if(!pause && apply30OnApplicationFocus)
         {
-            ApplyTargetFramerate();
+            SetTargetFramerate(30);
         }
     }
 
-    private void ApplyTargetFramerate() 
+	void Update()
+	{
+		if (applyOnUpdate)
+		{
+			SetTargetFramerate(targetFramerate);
+		}
+	}
+
+    private void SetTargetFramerate(int fps) 
     {
-        Application.targetFrameRate = targetFramerate;
+        Application.targetFrameRate = fps;
     }
 }
